@@ -6,232 +6,678 @@
     <title>Kattakord - производство домокомплектов под ключ</title>
     <meta name="description" content="Производство и сборка качественных домокомплектов по индивидуальным и типовым проектам">
     <style>
-        /* Все предыдущие стили остаются без изменений */
-        /* Добавляем только новые стили для слайдера и модального окна */
-        
-        /* Стили для слайдера в каталоге */
-        .catalog-slider {
-            position: relative;
-            height: 250px;
-            overflow: hidden;
-            border-radius: 5px 5px 0 0;
+        /* Обновленные стили */
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #317488;
+            --light-color: #b1c1d3;
+            --dark-color: #333;
+            --text-color: #444;
+            --white: #fff;
+            --gray: #ddd;
+            --dark-gray: #888;
         }
         
-        .slider-container {
-            position: relative;
-            height: 100%;
+        /* Основные стили */
+        * {
+            box-sizing: border-box;
         }
         
-        .slider-track {
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--light-color);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Шапка */
+        header {
+            background-color: var(--secondary-color);
+            color: var(--white);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-container {
             display: flex;
-            height: 100%;
-            transition: transform 0.5s ease;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .slider-slide {
-            min-width: 100%;
-            height: 100%;
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
         }
         
-        .slider-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: zoom-in;
+        nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+        
+        /* Герой секция */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://example.com/hero-bg.jpg') no-repeat center center;
+            background-size: cover;
+            color: var(--white);
+            padding: 120px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid var(--primary-color);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--primary-color);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Секции */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 36px;
+            position: relative;
+            color: var(--secondary-color);
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto 0;
+        }
+        
+        /* Особенности */
+        .features {
+            background: var(--white);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 5px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--light-color);
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 50px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        /* Каталог */
+        .catalog {
+            background: var(--light-color);
+        }
+        
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .catalog-item {
+            background: var(--white);
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s;
         }
         
-        .slider-slide img:hover {
-            transform: scale(1.02);
+        .catalog-item:hover {
+            transform: translateY(-10px);
         }
         
-        .slider-prev, .slider-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            padding: 10px;
+        .catalog-img {
+            height: 250px;
+            overflow: hidden;
+        }
+        
+        .catalog-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .catalog-item:hover .catalog-img img {
+            transform: scale(1.1);
+        }
+        
+        .catalog-info {
+            padding: 20px;
+        }
+        
+        .catalog-info h3 {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .catalog-specs {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+        
+        .catalog-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 20px 0;
+        }
+        
+        /* Калькулятор */
+        .calculator {
+            background: var(--white);
+        }
+        
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .calculator-step {
+            margin-bottom: 30px;
+        }
+        
+        .calculator-step h3 {
+            margin-bottom: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .calculator-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .calculator-option {
+            background: var(--white);
+            border: 1px solid var(--gray);
+            padding: 15px;
+            border-radius: 5px;
             cursor: pointer;
-            border-radius: 50%;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .calculator-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .calculator-option.active {
+            background: var(--primary-color);
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+        
+        .calculator-result {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+        }
+        
+        .calculator-total {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+        
+        /* Галерея */
+        .gallery {
+            background: var(--light-color);
+        }
+        
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            height: 250px;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: var(--white);
+            padding: 15px;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        /* Этапы работы */
+        .steps {
+            background: var(--white);
+        }
+        
+        .step-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+        
+        .step-item {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--light-color);
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 40px;
             height: 40px;
+            background: var(--primary-color);
+            color: var(--white);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 10;
-            opacity: 0;
-            transition: opacity 0.3s;
+            font-weight: bold;
         }
         
-        .slider-prev {
-            left: 10px;
+        /* FAQ */
+        .faq {
+            background: var(--light-color);
         }
         
-        .slider-next {
-            right: 10px;
+        .faq-item {
+            margin-bottom: 15px;
+            border: 1px solid var(--gray);
+            border-radius: 5px;
+            overflow: hidden;
         }
         
-        .slider-container:hover .slider-prev,
-        .slider-container:hover .slider-next {
-            opacity: 1;
+        .faq-question {
+            padding: 15px 20px;
+            background: var(--white);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
         }
         
-        .slider-dots {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
+        .faq-question:hover {
+            background: #f0f0f0;
+        }
+        
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background: var(--white);
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 15px 20px;
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform 0.3s;
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Контакты */
+        .contacts {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+        
+        .contacts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+        
+        .contacts-info h3 {
+            font-size: 24px;
+            margin-top: 0;
+        }
+        
+        .contact-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-icon {
+            margin-right: 15px;
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            color: var(--white);
+        }
+        
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #ccc;
+        }
+        
+        /* Подвал */
+        footer {
+            background: #1a252f;
+            color: #bbb;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        .footer-links {
             display: flex;
             justify-content: center;
-            gap: 5px;
-            z-index: 10;
+            margin-bottom: 20px;
         }
         
-        .slider-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.5);
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        
-        .slider-dot.active {
-            background: white;
-        }
-        
-        /* Стили для модального окна просмотра изображений */
-        .image-modal {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            overflow: auto;
-        }
-        
-        .modal-content {
-            margin: auto;
-            display: block;
-            max-width: 80%;
-            max-height: 80%;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: zoomIn 0.3s;
-        }
-        
-        @keyframes zoomIn {
-            from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;}
-            to {transform: translate(-50%, -50%) scale(1); opacity: 1;}
-        }
-        
-        .close-image-modal {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: white;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 10;
+        .footer-links a {
+            color: #bbb;
+            margin: 0 15px;
+            text-decoration: none;
             transition: color 0.3s;
         }
         
-        .close-image-modal:hover {
-            color: #e74c3c;
+        .footer-links a:hover {
+            color: var(--primary-color);
         }
         
-        .caption {
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: absolute;
-            bottom: 20px;
+        .copyright {
+            font-size: 14px;
+        }
+        
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.7);
-        }
-        
-        .modal-nav {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.5);
-            color: white;
-            border: none;
-            padding: 15px;
-            cursor: pointer;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            z-index: 10;
-            font-size: 20px;
-            transition: all 0.3s;
         }
         
-        .modal-nav:hover {
-            background: rgba(0,0,0,0.8);
+        .modal-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 5px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
         }
         
-        .modal-prev {
-            left: 30px;
-        }
-        
-        .modal-next {
-            right: 30px;
-        }
-        
-        .image-counter {
+        .close-modal {
             position: absolute;
-            top: 20px;
-            left: 30px;
-            color: white;
-            font-size: 16px;
-            background: rgba(0,0,0,0.7);
-            padding: 5px 10px;
-            border-radius: 20px;
-            z-index: 10;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+        
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 992px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .contacts-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         
         @media (max-width: 768px) {
-            .modal-content {
-                max-width: 95%;
-                max-height: 70%;
+            .header-container {
+                flex-direction: column;
+                text-align: center;
             }
             
-            .modal-nav {
-                width: 40px;
-                height: 40px;
-                padding: 10px;
-                font-size: 16px;
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .modal-prev {
-                left: 10px;
+            nav ul li {
+                margin: 0 10px 10px;
             }
             
-            .modal-next {
-                right: 10px;
+            .mobile-menu-btn {
+                display: block;
             }
             
-            .close-image-modal {
-                font-size: 30px;
-                top: 15px;
-                right: 15px;
+            #mainNav {
+                display: none;
             }
             
-            .image-counter {
-                top: 15px;
-                left: 15px;
+            #mainNav.active {
+                display: block;
+            }
+            
+            .hero {
+                padding: 80px 0;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .btn {
+                display: block;
+                margin: 10px auto;
+                max-width: 200px;
+            }
+            
+            .btn-outline {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            section {
+                padding: 50px 0;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .catalog-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .step-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .step-item {
+                max-width: 100%;
             }
         }
     </style>
@@ -258,38 +704,82 @@
         </div>
     </header>
 
-    <!-- Остальные секции остаются без изменений -->
-    <!-- ... -->
+    <!-- Герой-секция -->
+    <section class="hero">
+        <div class="container">
+            <h1>Профессиональное производство домокомплектов</h1>
+            <p>Собственное производство в Санкт Петербурге. Качественные материалы. Гарантия 5 лет. Сроки сборки от 3 дней.</p>
+			<p>У нас Вы можете заказать как домокoмплeкт для сaмoстoятeльной cбoрки, так и дом «под ключ»</p>
+            <a href="#calculator" class="btn">Рассчитать стоимость</a>
+            <a href="#catalog" class="btn btn-outline">Посмотреть проекты</a>
+        </div>
+    </section>
 
-    <!-- Каталог с обновленным слайдером -->
+    <!-- О компании -->
+    <section class="features" id="about">
+        <div class="container">
+            <h2 class="section-title">О нашей компании</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>Собственное производство</h3>
+                    <p>Полный цикл производства на собственных площадях. Контроль качества на каждом этапе.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Быстрые сроки</h3>
+                    <p>Изготовление домокомплекта за 2-4 недели. Сборка на участке от 3 дней.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Экологичные материалы</h3>
+                    <p>Используем только проверенные материалы от надежных поставщиков.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3>Гарантия 5 лет</h3>
+                    <p>Даем официальную гарантию на все конструкции и материалы.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-ruler-combined"></i>
+                    </div>
+                    <h3>Индивидуальные проекты</h3>
+                    <p>Разрабатываем домокомплекты по вашим размерам и пожеланиям.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Доставка по РФ</h3>
+                    <p>Организуем доставку в любой регион России.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Каталог -->
     <section class="catalog" id="catalog">
         <div class="container">
             <h2 class="section-title">Популярные домокомплекты</h2>
             <div class="catalog-grid">
                 <!-- Проект 1 -->
                 <div class="catalog-item">
-                    <div class="catalog-slider">
-                        <div class="slider-container">
-                            <div class="slider-track">
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house1-1.jpg" alt="Домокомплект 'Дачный' - вид спереди" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house1-2.jpg" alt="Домокомплект 'Дачный' - интерьер гостиной" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house1-3.jpg" alt="Домокомплект 'Дачный' - вид сбоку" class="zoomable">
-                                </div>
-                            </div>
-                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
-                            <div class="slider-dots"></div>
-                        </div>
+                    <div class="catalog-img">
+                        <img src="https://example.com/house1.jpg" alt="Домокомплект 'А-ФРEЙМ'">
                     </div>
                     <div class="catalog-info">
-                        <h3>Дачный</h3>
+                        <h3>А-ФРEЙМ</h3>
                         <div class="catalog-specs">
-                            <span><i class="fas fa-vector-square"></i> 45 м²</span>
+                            <span><i class="fas fa-vector-square"></i>от 36 м²</span>
                             <span><i class="fas fa-bed"></i> 2 комнаты</span>
                             <span><i class="fas fa-bath"></i> 1 санузел</span>
                         </div>
@@ -301,28 +791,13 @@
                 
                 <!-- Проект 2 -->
                 <div class="catalog-item">
-                    <div class="catalog-slider">
-                        <div class="slider-container">
-                            <div class="slider-track">
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house2-1.jpg" alt="Домокомплект 'Семейный' - главный фасад" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house2-2.jpg" alt="Домокомплект 'Семейный' - кухня-гостиная" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house2-3.jpg" alt="Домокомплект 'Семейный' - спальня" class="zoomable">
-                                </div>
-                            </div>
-                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
-                            <div class="slider-dots"></div>
-                        </div>
+                    <div class="catalog-img">
+                        <img src="https://example.com/house2.jpg" alt="Домокомплект 'БАРН'">
                     </div>
                     <div class="catalog-info">
-                        <h3>Семейный</h3>
+                        <h3>БАРН</h3>
                         <div class="catalog-specs">
-                            <span><i class="fas fa-vector-square"></i> 85 м²</span>
+                            <span><i class="fas fa-vector-square"></i>от 36 м²</span>
                             <span><i class="fas fa-bed"></i> 3 комнаты</span>
                             <span><i class="fas fa-bath"></i> 1 санузел</span>
                         </div>
@@ -334,224 +809,623 @@
                 
                 <!-- Проект 3 -->
                 <div class="catalog-item">
-                    <div class="catalog-slider">
-                        <div class="slider-container">
-                            <div class="slider-track">
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house3-1.jpg" alt="Домокомплект 'Коттедж' - вид спереди" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house3-2.jpg" alt="Домокомплект 'Коттедж' - терраса" class="zoomable">
-                                </div>
-                                <div class="slider-slide">
-                                    <img src="https://example.com/house3-3.jpg" alt="Домокомплект 'Коттедж' - второй этаж" class="zoomable">
-                                </div>
-                            </div>
-                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
-                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
-                            <div class="slider-dots"></div>
-                        </div>
+                    <div class="catalog-img">
+                        <img src="https://example.com/house3.jpg" alt="Домокомплект 'Классический'">
                     </div>
                     <div class="catalog-info">
-                        <h3>Коттедж</h3>
+                        <h3>Дом в классическом стиле</h3>
                         <div class="catalog-specs">
                             <span><i class="fas fa-vector-square"></i> 120 м²</span>
                             <span><i class="fas fa-bed"></i> 4 комнаты</span>
                             <span><i class="fas fa-bath"></i> 2 санузла</span>
                         </div>
-                        <p>Просторный двухэтажный коттедж для комфортного проживания большой семьи.</p>
+                        <p>Просторный полутороэтажный коттедж для комфортного проживания большой семьи.</p>
                         <div class="catalog-price">от 1 200 000 ₽</div>
                         <a href="#contacts" class="btn">Заказать</a>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- Модальное окно для увеличенного просмотра изображений -->
-        <div class="image-modal" id="imageModal">
-            <span class="close-image-modal">&times;</span>
-            <div class="image-counter" id="imageCounter"></div>
-            <button class="modal-nav modal-prev"><i class="fas fa-chevron-left"></i></button>
-            <button class="modal-nav modal-next"><i class="fas fa-chevron-right"></i></button>
-            <img class="modal-content" id="modalImage">
-            <div class="caption" id="modalCaption"></div>
+    <!-- Технологии -->
+    <section class="features" id="technology">
+        <div class="container">
+            <h2 class="section-title">Наши технологии</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Каркасная технология</h3>
+                    <p>Прочные и теплые дома по современным стандартам. Каркас из сухого строганного бруса.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-tree"></i>
+                    </div>
+                    <h3>Качественная древесина</h3>
+                    <p>Используем брус камерной сушки, что исключает усадку и деформации конструкции.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-snowflake"></i>
+                    </div>
+                    <h3>Энергоэффективность</h3>
+                    <p>Специальные утеплители и технологии для максимального сохранения тепла.</p>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Остальные секции остаются без изменений -->
-    <!-- ... -->
+    <!-- Галерея реализованных проектов -->
+    <section class="gallery">
+        <div class="container">
+            <h2 class="section-title">Галерея наших работ</h2>
+            <div class="gallery-container">
+                <div class="gallery-item">
+                    <img src="https://example.com/gallery1.jpg" alt="Домокомплект в Подмосковье">
+                    <div class="gallery-caption">
+                        <h3>Дом в Подмосковье</h3>
+                        <p>Площадь: 85 м², срок строительства: 3 недели</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://example.com/gallery2.jpg" alt="Домокомплект в Ленинградской области">
+                    <div class="gallery-caption">
+                        <h3>Дача в Ленобласти</h3>
+                        <p>Площадь: 65 м², срок строительства: 2 недели</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://example.com/gallery3.jpg" alt="Домокомплект в Калужской области">
+                    <div class="gallery-caption">
+                        <h3>Дом в классическом стиле в Калужской области</h3>
+                        <p>Площадь: 110 м², срок строительства: 4 недели</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Этапы работы -->
+    <section class="steps">
+        <div class="container">
+            <h2 class="section-title">Как мы работаем</h2>
+            <div class="step-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <h3>Консультация</h3>
+                    <p>Обсуждение ваших потребностей и выбор проекта</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <h3>Договор</h3>
+                    <p>Заключение договора и внесение предоплаты</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <h3>Производство</h3>
+                    <p>Изготовление домокомплекта на нашем заводе</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <h3>Доставка и сборка</h3>
+                    <p>Транспортировка и монтаж на вашем участке</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">5</div>
+                    <h3>Сдача объекта</h3>
+                    <p>Подписание акта сдачи-приемки</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Калькулятор -->
+    <section class="calculator" id="calculator">
+        <div class="container">
+            <h2 class="section-title">Калькулятор стоимости</h2>
+            <div class="calculator-container">
+                <!-- Шаг 1 - Выбор размера -->
+                <div class="calculator-step">
+                    <h3>1. Выберите размер домокомплекта</h3>
+                    <div class="calculator-options" id="sizeOptions">
+                        <div class="calculator-option" data-size="small" data-factor="1" data-size-name="Маленький (до 50 м²)">
+                            <h4>Маленький</h4>
+                            <p>до 50 м²</p>
+                            <p>Базовый коэффициент: 1x</p>
+                        </div>
+                        <div class="calculator-option" data-size="medium" data-factor="1.5" data-size-name="Средний (50-100 м²)">
+                            <h4>Средний</h4>
+                            <p>50-100 м²</p>
+                            <p>Базовый коэффициент: 1.5x</p>
+                        </div>
+                        <div class="calculator-option" data-size="large" data-factor="2.2" data-size-name="Большой (100-150 м²)">
+                            <h4>Большой</h4>
+                            <p>100-150 м²</p>
+                            <p>Базовый коэффициент: 2.2x</p>
+                        </div>
+                        <div class="calculator-option" data-size="xlarge" data-factor="3" data-size-name="Очень большой (150+ м²)">
+                            <h4>Очень большой</h4>
+                            <p>150+ м²</p>
+                            <p>Базовый коэффициент: 3x</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Шаг 2 - Выбор типа -->
+                <div class="calculator-step">
+                    <h3>2. Выберите тип домокомплекта</h3>
+                    <div class="calculator-options" id="typeOptions">
+                        <div class="calculator-option" data-price="450000" data-type="А-ФРEЙМ">
+                            <h4>А-ФРEЙМ</h4>
+                            <p>от 45 м²</p>
+                            <p>от 450 000 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-price="850000" data-type="БАРН">
+                            <h4>БАРН</h4>
+                            <p>от 85 м²</p>
+                            <p>от 850 000 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-price="1200000" data-type="Дом в классическом стиле">
+                            <h4>Дом в классическом стиле</h4>
+                            <p>от 120 м²</p>
+                            <p>от 1 200 000 ₽</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Шаг 3 - Комплектация -->
+                <div class="calculator-step">
+                    <h3>3. Выберите комплектацию</h3>
+                    <div class="calculator-options" id="complectationOptions">
+                        <div class="calculator-option" data-percent="0" data-complectation="Базовая">
+                            <h4>Базовая</h4>
+                            <p>Каркас, утепление, кровля</p>
+                            <p>+0% к стоимости</p>
+                        </div>
+                        <div class="calculator-option" data-percent="20" data-complectation="Стандарт">
+                            <h4>Стандарт</h4>
+                            <p>+ окна, двери, отделка</p>
+                            <p>+20% к стоимости</p>
+                        </div>
+                        <div class="calculator-option" data-percent="40" data-complectation="Под ключ">
+                            <h4>Под ключ</h4>
+                            <p>Полная готовность к заселению</p>
+                            <p>+40% к стоимости</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Шаг 4 - Дополнительные опции -->
+                <div class="calculator-step">
+                    <h3>4. Дополнительные опции</h3>
+                    <div class="calculator-options" id="additionalOptions">
+                        <div class="calculator-option" data-add="0" data-option="Без доп. опций">
+                            <h4>Без доп. опций</h4>
+                            <p>+0 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-add="50000" data-option="Терраса">
+                            <h4>Терраса</h4>
+                            <p>+50 000 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-add="80000" data-option="Мансарда">
+                            <h4>Мансарда</h4>
+                            <p>+80 000 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-add="30000" data-option="Веранда">
+                            <h4>Веранда</h4>
+                            <p>+30 000 ₽</p>
+                        </div>
+                        <div class="calculator-option" data-add="100000" data-option="Гараж">
+                            <h4>Гараж</h4>
+                            <p>+100 000 ₽</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Результат -->
+                <div class="calculator-result" id="calculatorResult">
+                    <h3>Примерная стоимость вашего домокомплекта:</h3>
+                    <div class="calculator-total" id="calculatorTotal">0 ₽</div>
+                    <p id="selectedOptions"></p>
+                    <p id="selectedSize"></p>
+                    <a href="#contacts" class="btn">Оставить заявку</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div class="container">
+            <h2 class="section-title">Частые вопросы</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Какой срок производства домокомплекта?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Срок производства зависит от сложности проекта и составляет от 2 до 4 недель. Типовые проекты изготавливаются быстрее, индивидуальные - дольше.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Нужен ли фундамент для домокомплекта?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, для установки домокомплекта требуется фундамент. Мы можем порекомендовать оптимальный тип фундамента в зависимости от грунтов на вашем участке.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Можно ли изменить планировку типового проекта?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Да, мы можем внести изменения в типовой проект согласно вашим пожеланиям. Стоимость изменений рассчитывается индивидуально.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Какие документы я получу после строительства?</span>
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Мы предоставляем полный пакет документов: договор, акты выполненных работ, гарантийные документы, инструкции по эксплуатации.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты -->
+    <section class="contacts" id="contacts">
+        <div class="container">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contacts-container">
+                <div class="contacts-info">
+                    <h3>Наши контактные данные</h3>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <strong>Адрес производства:</strong><br>
+                            г. Москва, ул. Заводская, 15
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <strong>Телефон:</strong><br>
+                            <a href="tel:+74951234567" style="color: white;">+7 (495) 123-45-67</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <strong>Email:</strong><br>
+                            <a href="mailto:info@domkomplekt.ru" style="color: white;">info@domkomplekt.ru</a>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <strong>Режим работы:</strong><br>
+                            Пн-Пт: 9:00 - 18:00<br>
+                            Сб-Вс: выходной
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3>Оставьте заявку</h3>
+                    <form id="feedbackForm">
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                        <input type="tel" name="phone" placeholder="Ваш телефон" required>
+                        <input type="email" name="email" placeholder="Ваш email">
+                        <textarea name="message" placeholder="Ваше сообщение"></textarea>
+                        <button type="submit" class="btn">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для заявки -->
+    <div class="modal" id="requestModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Оставить заявку</h2>
+            <form id="modalForm">
+                <input type="text" name="name" placeholder="Ваше имя" required>
+                <input type="tel" name="phone" placeholder="Ваш телефон" required>
+                <select name="interest">
+                    <option value="">Выберите интересующий проект</option>
+                    <option value="А-ФРEЙМ">А-ФРEЙМ</option>
+                    <option value="БАРН">БАРН</option>
+                    <option value="Дом в классическом стиле">Дом в классическом стиле</option>
+                    <option value="Индивидуальный">Индивидуальный проект</option>
+                </select>
+                <textarea name="message" placeholder="Ваши пожелания"></textarea>
+                <button type="submit" class="btn pulse">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Подвал -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#about">О компании</a>
+                <a href="#catalog">Каталог</a>
+                <a href="#technology">Технологии</a>
+                <a href="#calculator">Калькулятор</a>
+                <a href="#contacts">Контакты</a>
+            </div>
+            <div class="copyright">
+                © 2023 Kattakord. Все права защищены.
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Все предыдущие скрипты остаются без изменений
-        // Добавляем только новые скрипты для слайдера и модального окна
-        
-        // Инициализация слайдеров для каждого каталога
-        document.querySelectorAll('.catalog-slider').forEach(slider => {
-            const track = slider.querySelector('.slider-track');
-            const slides = slider.querySelectorAll('.slider-slide');
-            const prevBtn = slider.querySelector('.slider-prev');
-            const nextBtn = slider.querySelector('.slider-next');
-            const dotsContainer = slider.querySelector('.slider-dots');
-            
-            let currentSlide = 0;
-            const slideCount = slides.length;
-            
-            // Создаем точки навигации
-            slides.forEach((slide, index) => {
-                const dot = document.createElement('div');
-                dot.classList.add('slider-dot');
-                if (index === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => {
-                    goToSlide(index);
-                });
-                dotsContainer.appendChild(dot);
-            });
-            
-            const dots = slider.querySelectorAll('.slider-dot');
-            
-            // Функция перехода к конкретному слайду
-            function goToSlide(index) {
-                currentSlide = index;
-                track.style.transform = `translateX(-${currentSlide * 100}%)`;
-                
-                // Обновляем активную точку
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('active', i === currentSlide);
-                });
-            }
-            
-            // Кнопка "назад"
-            prevBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-                goToSlide(currentSlide);
-            });
-            
-            // Кнопка "вперед"
-            nextBtn.addEventListener('click', () => {
-                currentSlide = (currentSlide + 1) % slideCount;
-                goToSlide(currentSlide);
-            });
-            
-            // Автопрокрутка (опционально)
-            let slideInterval = setInterval(() => {
-                currentSlide = (currentSlide + 1) % slideCount;
-                goToSlide(currentSlide);
-            }, 5000);
-            
-            // Остановка автопрокрутки при наведении
-            slider.addEventListener('mouseenter', () => {
-                clearInterval(slideInterval);
-            });
-            
-            slider.addEventListener('mouseleave', () => {
-                slideInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % slideCount;
-                    goToSlide(currentSlide);
-                }, 5000);
-            });
-            
-            // Инициализация тач-событий для мобильных устройств
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            track.addEventListener('touchstart', (e) => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, {passive: true});
-            
-            track.addEventListener('touchend', (e) => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, {passive: true});
-            
-            function handleSwipe() {
-                if (touchEndX < touchStartX - 50) {
-                    // Свайп влево
-                    currentSlide = (currentSlide + 1) % slideCount;
-                    goToSlide(currentSlide);
-                } else if (touchEndX > touchStartX + 50) {
-                    // Свайп вправо
-                    currentSlide = (currentSlide - 1 + slideCount) % slideCount;
-                    goToSlide(currentSlide);
-                }
-            }
+        // Мобильное меню
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            nav.classList.toggle('active');
         });
         
-        // Функционал увеличения изображений с навигацией
-        const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
-        const modalCaption = document.getElementById('modalCaption');
-        const modalPrev = document.querySelector('.modal-prev');
-        const modalNext = document.querySelector('.modal-next');
-        const imageCounter = document.getElementById('imageCounter');
+        // Плавная прокрутка
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Закрываем мобильное меню после клика
+                    const nav = document.getElementById('mainNav');
+                    if (window.innerWidth <= 768) {
+                        nav.classList.remove('active');
+                    }
+                }
+            });
+        });
         
-        let currentImages = [];
-        let currentIndex = 0;
+        // FAQ аккордеон
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                
+                // Закрываем другие открытые вопросы
+                document.querySelectorAll('.faq-item').forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+            });
+        });
         
-        // Функция открытия модального окна
-        function openModal(images, index) {
-            currentImages = images;
-            currentIndex = index;
-            updateModalImage();
-            modal.style.display = 'block';
+        // Модальное окно
+        const modal = document.getElementById('requestModal');
+        const closeModal = document.querySelector('.close-modal');
+        const requestButtons = document.querySelectorAll('.request-btn');
+        
+        function openModal() {
+            modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
         
-        // Функция обновления изображения в модальном окне
-        function updateModalImage() {
-            modalImg.src = currentImages[currentIndex].src;
-            modalCaption.innerHTML = currentImages[currentIndex].alt;
-            imageCounter.textContent = `${currentIndex + 1}/${currentImages.length}`;
-        }
-        
-        // Навигация по изображениям
-        modalPrev.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-            updateModalImage();
-        });
-        
-        modalNext.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % currentImages.length;
-            updateModalImage();
-        });
-        
-        // Закрытие модального окна
-        document.querySelector('.close-image-modal').addEventListener('click', () => {
+        function closeModalFunc() {
             modal.style.display = 'none';
             document.body.style.overflow = '';
-        });
+        }
         
-        // Закрытие при клике вне изображения
-        modal.addEventListener('click', function(e) {
+        closeModal.addEventListener('click', closeModalFunc);
+        
+        window.addEventListener('click', (e) => {
             if (e.target === modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = '';
+                closeModalFunc();
             }
         });
         
-        // Навигация клавишами клавиатуры
-        document.addEventListener('keydown', function(e) {
-            if (modal.style.display === 'block') {
-                if (e.key === 'Escape') {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = '';
-                } else if (e.key === 'ArrowLeft') {
-                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-                    updateModalImage();
-                } else if (e.key === 'ArrowRight') {
-                    currentIndex = (currentIndex + 1) % currentImages.length;
-                    updateModalImage();
+        requestButtons.forEach(btn => {
+            btn.addEventListener('click', openModal);
+        });
+        
+        // Калькулятор
+        const sizeOptions = document.querySelectorAll('#sizeOptions .calculator-option');
+        const typeOptions = document.querySelectorAll('#typeOptions .calculator-option');
+        const complectationOptions = document.querySelectorAll('#complectationOptions .calculator-option');
+        const additionalOptions = document.querySelectorAll('#additionalOptions .calculator-option');
+        const calculatorResult = document.getElementById('calculatorResult');
+        const calculatorTotal = document.getElementById('calculatorTotal');
+        const selectedOptions = document.getElementById('selectedOptions');
+        const selectedSize = document.getElementById('selectedSize');
+        
+        let selectedSizeOption = null;
+        let selectedType = null;
+        let selectedComplectation = null;
+        let selectedAdditional = null;
+        
+        function updateCalculator() {
+            if (selectedSizeOption && selectedType && selectedComplectation) {
+                let basePrice = parseInt(selectedType.dataset.price);
+                let sizeFactor = parseFloat(selectedSizeOption.dataset.factor);
+                
+                // Рассчитываем стоимость с учетом размера
+                let total = basePrice * sizeFactor;
+                
+                // Добавляем комплектацию
+                total += total * (parseInt(selectedComplectation.dataset.percent) / 100);
+                
+                // Добавляем дополнительные опции
+                if (selectedAdditional) {
+                    total += parseInt(selectedAdditional.dataset.add);
                 }
+                
+                // Форматируем и выводим результат
+                calculatorTotal.textContent = total.toLocaleString('ru-RU') + ' ₽';
+                
+                // Формируем текст с выбранными опциями
+                let optionsText = `Вы выбрали: ${selectedType.dataset.type}, комплектация ${selectedComplectation.dataset.complectation}`;
+                if (selectedAdditional) {
+                    optionsText += `, ${selectedAdditional.dataset.option}`;
+                }
+                
+                selectedOptions.textContent = optionsText;
+                selectedSize.textContent = `Размер: ${selectedSizeOption.dataset.sizeName}`;
+                calculatorResult.style.display = 'block';
+            }
+        }
+        
+        // Обработчики для выбора размера
+        sizeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                sizeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedSizeOption = this;
+                updateCalculator();
+            });
+        });
+        
+        // Обработчики для выбора типа
+        typeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                typeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedType = this;
+                updateCalculator();
+            });
+        });
+        
+        // Обработчики для выбора комплектации
+        complectationOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                complectationOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedComplectation = this;
+                updateCalculator();
+            });
+        });
+        
+        // Обработчики для выбора дополнительных опций
+        additionalOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                additionalOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedAdditional = this;
+                updateCalculator();
+            });
+        });
+        
+        // Плавное появление элементов при скролле
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-item, .catalog-item, .step-item, .gallery-item, .calculator-step');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.3;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+        
+        // Инициализация анимации
+        window.addEventListener('scroll', animateOnScroll);
+        
+        // Установка начальных стилей для анимации
+        document.querySelectorAll('.feature-item, .catalog-item, .step-item, .gallery-item, .calculator-step').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(50px)';
+            element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+        
+        // Запускаем сразу на случай, если элементы уже в зоне видимости
+        animateOnScroll();
+        
+        // Кнопка "Наверх"
+        const scrollToTopBtn = document.createElement('div');
+        scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+        scrollToTopBtn.style.position = 'fixed';
+        scrollToTopBtn.style.bottom = '30px';
+        scrollToTopBtn.style.right = '30px';
+        scrollToTopBtn.style.backgroundColor = 'var(--primary-color)';
+        scrollToTopBtn.style.color = 'white';
+        scrollToTopBtn.style.width = '50px';
+        scrollToTopBtn.style.height = '50px';
+        scrollToTopBtn.style.borderRadius = '50%';
+        scrollToTopBtn.style.display = 'flex';
+        scrollToTopBtn.style.alignItems = 'center';
+        scrollToTopBtn.style.justifyContent = 'center';
+        scrollToTopBtn.style.cursor = 'pointer';
+        scrollToTopBtn.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+        scrollToTopBtn.style.opacity = '0';
+        scrollToTopBtn.style.transition = 'opacity 0.3s';
+        scrollToTopBtn.style.zIndex = '999';
+        
+        document.body.appendChild(scrollToTopBtn);
+        
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.style.opacity = '1';
+            } else {
+                scrollToTopBtn.style.opacity = '0';
             }
         });
         
-        // Инициализация кликов по изображениям
-        document.querySelectorAll('.catalog-item').forEach(item => {
-            const images = Array.from(item.querySelectorAll('.zoomable'));
-            images.forEach((img, index) => {
-                img.addEventListener('click', () => {
-                    openModal(images, index);
-                });
-            });
+        // Отправка формы
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за вашу заявку! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+        
+        document.getElementById('modalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за вашу заявку! Мы свяжемся с вами для уточнения деталей.');
+            this.reset();
+            closeModalFunc();
+        });
+        
+        // Адаптация меню при изменении размера окна
+        window.addEventListener('resize', function() {
+            const nav = document.getElementById('mainNav');
+            if (window.innerWidth > 768) {
+                nav.style.display = '';
+            }
         });
     </script>
 </body>
