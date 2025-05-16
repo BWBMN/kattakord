@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kattakord - производство домокомплектов под ключ</title>
+    <title>ДомКомплект - производство домокомплектов под ключ</title>
     <meta name="description" content="Производство и сборка качественных домокомплектов по индивидуальным и типовым проектам">
     <style>
-        /* Обновленные стили */
+        /* Основные стили */
         :root {
             --primary-color: #e74c3c;
-            --secondary-color: #317488;
-            --light-color: #b1c1d3;
+            --secondary-color: #2c3e50;
+            --light-color: #f5f5f5;
             --dark-color: #333;
             --text-color: #444;
             --white: #fff;
@@ -18,7 +18,6 @@
             --dark-gray: #888;
         }
         
-        /* Основные стили */
         * {
             box-sizing: border-box;
         }
@@ -222,20 +221,97 @@
             transform: translateY(-10px);
         }
         
-        .catalog-img {
+        /* Стили для слайдера в каталоге */
+        .catalog-slider {
+            position: relative;
             height: 250px;
             overflow: hidden;
+            border-radius: 5px 5px 0 0;
         }
         
-        .catalog-img img {
+        .slider-container {
+            position: relative;
+            height: 100%;
+        }
+        
+        .slider-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .slider-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+        
+        .slider-slide img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            cursor: zoom-in;
+            transition: transform 0.3s;
         }
         
-        .catalog-item:hover .catalog-img img {
-            transform: scale(1.1);
+        .slider-slide img:hover {
+            transform: scale(1.02);
+        }
+        
+        .slider-prev, .slider-next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .slider-prev {
+            left: 10px;
+        }
+        
+        .slider-next {
+            right: 10px;
+        }
+        
+        .slider-container:hover .slider-prev,
+        .slider-container:hover .slider-next {
+            opacity: 1;
+        }
+        
+        .slider-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            z-index: 10;
+        }
+        
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .slider-dot.active {
+            background: white;
         }
         
         .catalog-info {
@@ -537,38 +613,104 @@
             font-size: 14px;
         }
         
-        /* Модальное окно */
-        .modal {
+        /* Модальное окно для изображений */
+        .image-modal {
             display: none;
             position: fixed;
-            top: 0;
+            z-index: 2000;
             left: 0;
+            top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
+            background-color: rgba(0,0,0,0.9);
+            overflow: auto;
         }
         
         .modal-content {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 5px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
+            margin: auto;
+            display: block;
+            max-width: 80%;
+            max-height: 80%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: zoomIn 0.3s;
         }
         
-        .close-modal {
+        @keyframes zoomIn {
+            from {transform: translate(-50%, -50%) scale(0.9); opacity: 0;}
+            to {transform: translate(-50%, -50%) scale(1); opacity: 1;}
+        }
+        
+        .close-image-modal {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
             cursor: pointer;
-            color: var(--dark-gray);
+            z-index: 10;
+            transition: color 0.3s;
+        }
+        
+        .close-image-modal:hover {
+            color: #e74c3c;
+        }
+        
+        .caption {
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+        }
+        
+        .modal-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        
+        .modal-nav:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        
+        .modal-prev {
+            left: 30px;
+        }
+        
+        .modal-next {
+            right: 30px;
+        }
+        
+        .image-counter {
+            position: absolute;
+            top: 20px;
+            left: 30px;
+            color: white;
+            font-size: 16px;
+            background: rgba(0,0,0,0.7);
+            padding: 5px 10px;
+            border-radius: 20px;
+            z-index: 10;
         }
         
         /* Анимации */
@@ -660,6 +802,37 @@
             section {
                 padding: 50px 0;
             }
+            
+            .modal-content {
+                max-width: 95%;
+                max-height: 70%;
+            }
+            
+            .modal-nav {
+                width: 40px;
+                height: 40px;
+                padding: 10px;
+                font-size: 16px;
+            }
+            
+            .modal-prev {
+                left: 10px;
+            }
+            
+            .modal-next {
+                right: 10px;
+            }
+            
+            .close-image-modal {
+                font-size: 30px;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .image-counter {
+                top: 15px;
+                left: 15px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -688,7 +861,7 @@
     <!-- Шапка сайта -->
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">Kattakord</a>
+            <a href="#" class="logo">ДомКомплект</a>
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
@@ -708,8 +881,7 @@
     <section class="hero">
         <div class="container">
             <h1>Профессиональное производство домокомплектов</h1>
-            <p>Собственное производство в Санкт Петербурге. Качественные материалы. Гарантия 5 лет. Сроки сборки от 3 дней.</p>
-			<p>У нас Вы можете заказать как домокoмплeкт для сaмoстoятeльной cбoрки, так и дом «под ключ»</p>
+            <p>Собственное производство в Москве. Качественные материалы. Гарантия 10 лет. Сроки сборки от 7 дней.</p>
             <a href="#calculator" class="btn">Рассчитать стоимость</a>
             <a href="#catalog" class="btn btn-outline">Посмотреть проекты</a>
         </div>
@@ -732,7 +904,7 @@
                         <i class="fas fa-clock"></i>
                     </div>
                     <h3>Быстрые сроки</h3>
-                    <p>Изготовление домокомплекта за 2-4 недели. Сборка на участке от 3 дней.</p>
+                    <p>Изготовление домокомплекта за 2-4 недели. Сборка на участке от 7 дней.</p>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">
@@ -745,7 +917,7 @@
                     <div class="feature-icon">
                         <i class="fas fa-medal"></i>
                     </div>
-                    <h3>Гарантия 5 лет</h3>
+                    <h3>Гарантия 10 лет</h3>
                     <p>Даем официальную гарантию на все конструкции и материалы.</p>
                 </div>
                 <div class="feature-item">
@@ -773,13 +945,28 @@
             <div class="catalog-grid">
                 <!-- Проект 1 -->
                 <div class="catalog-item">
-                    <div class="catalog-img">
-                        <img src="https://example.com/house1.jpg" alt="Домокомплект 'А-ФРEЙМ'">
+                    <div class="catalog-slider">
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house1-1.jpg" alt="Домокомплект 'Дачный' - вид спереди" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house1-2.jpg" alt="Домокомплект 'Дачный' - интерьер гостиной" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house1-3.jpg" alt="Домокомплект 'Дачный' - вид сбоку" class="zoomable">
+                                </div>
+                            </div>
+                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                            <div class="slider-dots"></div>
+                        </div>
                     </div>
                     <div class="catalog-info">
-                        <h3>А-ФРEЙМ</h3>
+                        <h3>Дачный</h3>
                         <div class="catalog-specs">
-                            <span><i class="fas fa-vector-square"></i>от 36 м²</span>
+                            <span><i class="fas fa-vector-square"></i> 45 м²</span>
                             <span><i class="fas fa-bed"></i> 2 комнаты</span>
                             <span><i class="fas fa-bath"></i> 1 санузел</span>
                         </div>
@@ -791,13 +978,28 @@
                 
                 <!-- Проект 2 -->
                 <div class="catalog-item">
-                    <div class="catalog-img">
-                        <img src="https://example.com/house2.jpg" alt="Домокомплект 'БАРН'">
+                    <div class="catalog-slider">
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house2-1.jpg" alt="Домокомплект 'Семейный' - главный фасад" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house2-2.jpg" alt="Домокомплект 'Семейный' - кухня-гостиная" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house2-3.jpg" alt="Домокомплект 'Семейный' - спальня" class="zoomable">
+                                </div>
+                            </div>
+                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                            <div class="slider-dots"></div>
+                        </div>
                     </div>
                     <div class="catalog-info">
-                        <h3>БАРН</h3>
+                        <h3>Семейный</h3>
                         <div class="catalog-specs">
-                            <span><i class="fas fa-vector-square"></i>от 36 м²</span>
+                            <span><i class="fas fa-vector-square"></i> 85 м²</span>
                             <span><i class="fas fa-bed"></i> 3 комнаты</span>
                             <span><i class="fas fa-bath"></i> 1 санузел</span>
                         </div>
@@ -809,22 +1011,47 @@
                 
                 <!-- Проект 3 -->
                 <div class="catalog-item">
-                    <div class="catalog-img">
-                        <img src="https://example.com/house3.jpg" alt="Домокомплект 'Классический'">
+                    <div class="catalog-slider">
+                        <div class="slider-container">
+                            <div class="slider-track">
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house3-1.jpg" alt="Домокомплект 'Коттедж' - вид спереди" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house3-2.jpg" alt="Домокомплект 'Коттедж' - терраса" class="zoomable">
+                                </div>
+                                <div class="slider-slide">
+                                    <img src="https://example.com/house3-3.jpg" alt="Домокомплект 'Коттедж' - второй этаж" class="zoomable">
+                                </div>
+                            </div>
+                            <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                            <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                            <div class="slider-dots"></div>
+                        </div>
                     </div>
                     <div class="catalog-info">
-                        <h3>Дом в классическом стиле</h3>
+                        <h3>Коттедж</h3>
                         <div class="catalog-specs">
                             <span><i class="fas fa-vector-square"></i> 120 м²</span>
                             <span><i class="fas fa-bed"></i> 4 комнаты</span>
                             <span><i class="fas fa-bath"></i> 2 санузла</span>
                         </div>
-                        <p>Просторный полутороэтажный коттедж для комфортного проживания большой семьи.</p>
+                        <p>Просторный двухэтажный коттедж для комфортного проживания большой семьи.</p>
                         <div class="catalog-price">от 1 200 000 ₽</div>
                         <a href="#contacts" class="btn">Заказать</a>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Модальное окно для увеличенного просмотра изображений -->
+        <div class="image-modal" id="imageModal">
+            <span class="close-image-modal">&times;</span>
+            <div class="image-counter" id="imageCounter"></div>
+            <button class="modal-nav modal-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="modal-nav modal-next"><i class="fas fa-chevron-right"></i></button>
+            <img class="modal-content" id="modalImage">
+            <div class="caption" id="modalCaption"></div>
         </div>
     </section>
 
@@ -880,7 +1107,7 @@
                 <div class="gallery-item">
                     <img src="https://example.com/gallery3.jpg" alt="Домокомплект в Калужской области">
                     <div class="gallery-caption">
-                        <h3>Дом в классическом стиле в Калужской области</h3>
+                        <h3>Коттедж в Калужской области</h3>
                         <p>Площадь: 110 м², срок строительства: 4 недели</p>
                     </div>
                 </div>
@@ -958,18 +1185,18 @@
                 <div class="calculator-step">
                     <h3>2. Выберите тип домокомплекта</h3>
                     <div class="calculator-options" id="typeOptions">
-                        <div class="calculator-option" data-price="450000" data-type="А-ФРEЙМ">
-                            <h4>А-ФРEЙМ</h4>
+                        <div class="calculator-option" data-price="450000" data-type="Дачный">
+                            <h4>Дачный</h4>
                             <p>от 45 м²</p>
                             <p>от 450 000 ₽</p>
                         </div>
-                        <div class="calculator-option" data-price="850000" data-type="БАРН">
-                            <h4>БАРН</h4>
+                        <div class="calculator-option" data-price="850000" data-type="Семейный">
+                            <h4>Семейный</h4>
                             <p>от 85 м²</p>
                             <p>от 850 000 ₽</p>
                         </div>
-                        <div class="calculator-option" data-price="1200000" data-type="Дом в классическом стиле">
-                            <h4>Дом в классическом стиле</h4>
+                        <div class="calculator-option" data-price="1200000" data-type="Коттедж">
+                            <h4>Коттедж</h4>
                             <p>от 120 м²</p>
                             <p>от 1 200 000 ₽</p>
                         </div>
@@ -1096,7 +1323,7 @@
                         </div>
                         <div>
                             <strong>Адрес производства:</strong><br>
-                            Санкт-Петербург, пос. Парголово, Выборгское ш., 212с9
+                            г. Москва, ул. Заводская, 15
                         </div>
                     </div>
                     
@@ -1106,7 +1333,7 @@
                         </div>
                         <div>
                             <strong>Телефон:</strong><br>
-                            <a href="tel:+78121234567" style="color: white;">+7 (812) 123-45-67</a>
+                            <a href="tel:+74951234567" style="color: white;">+7 (495) 123-45-67</a>
                         </div>
                     </div>
                     
@@ -1116,7 +1343,7 @@
                         </div>
                         <div>
                             <strong>Email:</strong><br>
-                            <a href="mailto:info@domkomplekt.ru" style="color: white;">info@kattakord.ru</a>
+                            <a href="mailto:info@domkomplekt.ru" style="color: white;">info@domkomplekt.ru</a>
                         </div>
                     </div>
                     
@@ -1146,27 +1373,6 @@
         </div>
     </section>
 
-    <!-- Модальное окно для заявки -->
-    <div class="modal" id="requestModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h2>Оставить заявку</h2>
-            <form id="modalForm">
-                <input type="text" name="name" placeholder="Ваше имя" required>
-                <input type="tel" name="phone" placeholder="Ваш телефон" required>
-                <select name="interest">
-                    <option value="">Выберите интересующий проект</option>
-                    <option value="А-ФРEЙМ">А-ФРEЙМ</option>
-                    <option value="БАРН">БАРН</option>
-                    <option value="Дом в классическом стиле">Дом в классическом стиле</option>
-                    <option value="Индивидуальный">Индивидуальный проект</option>
-                </select>
-                <textarea name="message" placeholder="Ваши пожелания"></textarea>
-                <button type="submit" class="btn pulse">Отправить заявку</button>
-            </form>
-        </div>
-    </div>
-
     <!-- Подвал -->
     <footer>
         <div class="container">
@@ -1178,7 +1384,7 @@
                 <a href="#contacts">Контакты</a>
             </div>
             <div class="copyright">
-                © 2023 Kattakord. Все права защищены.
+                © 2023 ДомКомплект. Все права защищены.
             </div>
         </div>
     </footer>
@@ -1226,33 +1432,6 @@
                     }
                 });
             });
-        });
-        
-        // Модальное окно
-        const modal = document.getElementById('requestModal');
-        const closeModal = document.querySelector('.close-modal');
-        const requestButtons = document.querySelectorAll('.request-btn');
-        
-        function openModal() {
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModalFunc() {
-            modal.style.display = 'none';
-            document.body.style.overflow = '';
-        }
-        
-        closeModal.addEventListener('click', closeModalFunc);
-        
-        window.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModalFunc();
-            }
-        });
-        
-        requestButtons.forEach(btn => {
-            btn.addEventListener('click', openModal);
         });
         
         // Калькулятор
@@ -1341,6 +1520,175 @@
             });
         });
         
+        // Инициализация слайдеров для каждого каталога
+        document.querySelectorAll('.catalog-slider').forEach(slider => {
+            const track = slider.querySelector('.slider-track');
+            const slides = slider.querySelectorAll('.slider-slide');
+            const prevBtn = slider.querySelector('.slider-prev');
+            const nextBtn = slider.querySelector('.slider-next');
+            const dotsContainer = slider.querySelector('.slider-dots');
+            
+            let currentSlide = 0;
+            const slideCount = slides.length;
+            
+            // Создаем точки навигации
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(index);
+                });
+                dotsContainer.appendChild(dot);
+            });
+            
+            const dots = slider.querySelectorAll('.slider-dot');
+            
+            // Функция перехода к конкретному слайду
+            function goToSlide(index) {
+                currentSlide = index;
+                track.style.transform = `translateX(-${currentSlide * 100}%)`;
+                
+                // Обновляем активную точку
+                dots.forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentSlide);
+                });
+            }
+            
+            // Кнопка "назад"
+            prevBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                goToSlide(currentSlide);
+            });
+            
+            // Кнопка "вперед"
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % slideCount;
+                goToSlide(currentSlide);
+            });
+            
+            // Автопрокрутка (опционально)
+            let slideInterval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slideCount;
+                goToSlide(currentSlide);
+            }, 5000);
+            
+            // Остановка автопрокрутки при наведении
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slideCount;
+                    goToSlide(currentSlide);
+                }, 5000);
+            });
+            
+            // Инициализация тач-событий для мобильных устройств
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            track.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            
+            track.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+            
+            function handleSwipe() {
+                if (touchEndX < touchStartX - 50) {
+                    // Свайп влево
+                    currentSlide = (currentSlide + 1) % slideCount;
+                    goToSlide(currentSlide);
+                } else if (touchEndX > touchStartX + 50) {
+                    // Свайп вправо
+                    currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+                    goToSlide(currentSlide);
+                }
+            }
+        });
+        
+        // Функционал увеличения изображений с навигацией
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const modalCaption = document.getElementById('modalCaption');
+        const modalPrev = document.querySelector('.modal-prev');
+        const modalNext = document.querySelector('.modal-next');
+        const imageCounter = document.getElementById('imageCounter');
+        
+        let currentImages = [];
+        let currentIndex = 0;
+        
+        // Функция открытия модального окна
+        function openModal(images, index) {
+            currentImages = images;
+            currentIndex = index;
+            updateModalImage();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Функция обновления изображения в модальном окне
+        function updateModalImage() {
+            modalImg.src = currentImages[currentIndex].src;
+            modalCaption.innerHTML = currentImages[currentIndex].alt;
+            imageCounter.textContent = `${currentIndex + 1}/${currentImages.length}`;
+        }
+        
+        // Навигация по изображениям
+        modalPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+            updateModalImage();
+        });
+        
+        modalNext.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % currentImages.length;
+            updateModalImage();
+        });
+        
+        // Закрытие модального окна
+        document.querySelector('.close-image-modal').addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+        
+        // Закрытие при клике вне изображения
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Навигация клавишами клавиатуры
+        document.addEventListener('keydown', function(e) {
+            if (modal.style.display === 'block') {
+                if (e.key === 'Escape') {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = '';
+                } else if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+                    updateModalImage();
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % currentImages.length;
+                    updateModalImage();
+                }
+            }
+        });
+        
+        // Инициализация кликов по изображениям
+        document.querySelectorAll('.catalog-item').forEach(item => {
+            const images = Array.from(item.querySelectorAll('.zoomable'));
+            images.forEach((img, index) => {
+                img.addEventListener('click', () => {
+                    openModal(images, index);
+                });
+            });
+        });
+        
         // Плавное появление элементов при скролле
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.feature-item, .catalog-item, .step-item, .gallery-item, .calculator-step');
@@ -1411,13 +1759,6 @@
             e.preventDefault();
             alert('Спасибо за вашу заявку! Мы свяжемся с вами в ближайшее время.');
             this.reset();
-        });
-        
-        document.getElementById('modalForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Спасибо за вашу заявку! Мы свяжемся с вами для уточнения деталей.');
-            this.reset();
-            closeModalFunc();
         });
         
         // Адаптация меню при изменении размера окна
